@@ -1,5 +1,5 @@
-#GBDT
-#--------------------------------------------------------------------------
+# GBDT
+# --------------------------------------------------------------------------
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -7,15 +7,16 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.metrics import r2_score, mean_squared_error
 from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_percentage_error
+
 # Read Excel Data
 df = pd.read_excel('D:\\exp 1\\AVOCs.xlsx')
 
 # Separate Features and Target
 X = df.iloc[:, 1:-1]  # Features, assuming they are from the second column to the second-to-last column
-y = df.iloc[:, -1]    # Target, assuming the last column is algal concentration
+y = df.iloc[:, -1]  # Target, assuming the last column is algal concentration
 
 # Split Data into Training and Testing Sets
-#X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+# X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 # Split the dataset into training, validation, and test sets
 X_train, X_temp, y_train, y_temp = train_test_split(X, y, test_size=0.2, random_state=168)
 X_test, X_val, y_test, y_val = train_test_split(X_temp, y_temp, test_size=0.2, random_state=168)
@@ -26,10 +27,9 @@ print("Test set size:", len(X_test))
 print("Validation set size:", len(X_val))
 
 # Build and Train Gradient Boosting Decision Tree (GBDT) Regressor Model
-gbdt_model = GradientBoostingRegressor(n_estimators=100, learning_rate=0.1, max_depth=3)  # You can adjust parameters as needed
+gbdt_model = GradientBoostingRegressor(n_estimators=100, learning_rate=0.1,
+                                       max_depth=3)  # You can adjust parameters as needed
 gbdt_model.fit(X_train, y_train)
-
-
 
 # Make Predictions
 y_train_pred = gbdt_model.predict(X_train)
@@ -54,8 +54,8 @@ print(f'Mean Squared Error (Test): {mse_test}')
 print(f'Root Mean Squared Error (Test): {rmse_test}')
 print(f'Mean Absolute Percentage Error (Test): {mape_test}')
 
-#KNN
-#--------------------------------------------------------------------------
+# KNN
+# --------------------------------------------------------------------------
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -68,18 +68,16 @@ plt.rcParams['font.family'] = 'Times New Roman'
 plt.rcParams['font.weight'] = 'bold'
 plt.rcParams['axes.labelweight'] = 'bold'
 
-
 # Read Excel Data
 df = pd.read_excel('D:\\exp 1\\AVOCs.xlsx')
 
 # Separate Features and Target
 X = df.iloc[:, 1:-1]  # Features, assuming they are from the second column to the second-to-last column
-y = df.iloc[:, -1]    # Target, assuming the last column is algal concentration
+y = df.iloc[:, -1]  # Target, assuming the last column is algal concentration
 
 # Split Data into Training and Testing Sets
 X_train, X_temp, y_train, y_temp = train_test_split(X, y, test_size=0.2, random_state=168)
 X_test, X_val, y_test, y_val = train_test_split(X_temp, y_temp, test_size=0.2, random_state=168)
-
 
 # Build and Train K-Nearest Neighbors (KNN) Regressor Model
 knn_model = KNeighborsRegressor(n_neighbors=5)  # You can adjust n_neighbors as needed
@@ -108,8 +106,8 @@ print(f'Mean Squared Error (Test): {mse_test}')
 print(f'Root Mean Squared Error (Test): {rmse_test}')
 print(f'Mean Absolute Percentage Error (Test): {mape_test}')
 
-#SVM
-#--------------------------------------------------------------------------
+# SVM
+# --------------------------------------------------------------------------
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -117,18 +115,16 @@ from sklearn.model_selection import train_test_split
 from sklearn.svm import SVR
 from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_percentage_error
 
-
 plt.rcParams['font.family'] = 'Times New Roman'
 plt.rcParams['font.weight'] = 'bold'
 plt.rcParams['axes.labelweight'] = 'bold'
-
 
 # Read Excel Data
 df = pd.read_excel('D:\\exp 1\\AVOCs.xlsx')
 
 # Separate Features and Target
 X = df.iloc[:, 1:-1]  # Features, assuming they are from the second column to the second-to-last column
-y = df.iloc[:, -1]    # Target, assuming the last column is algal concentration
+y = df.iloc[:, -1]  # Target, assuming the last column is algal concentration
 
 # Split Data into Training and Testing Sets
 X_train, X_temp, y_train, y_temp = train_test_split(X, y, test_size=0.2, random_state=168)
@@ -161,8 +157,8 @@ print(f'Mean Squared Error (Test): {mse_test}')
 print(f'Root Mean Squared Error (Test): {rmse_test}')
 print(f'Mean Absolute Percentage Error (Test): {mape_test}')
 
-#RF
-#--------------------------------------------------------------------------
+# RF
+# --------------------------------------------------------------------------
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -175,7 +171,7 @@ df = pd.read_excel('D:\\exp 1\\AVOCs.xlsx')
 
 # Separate Features and Target
 X = df.iloc[:, 1:-1]  # Features, assuming they are from the second column to the second-to-last column
-y = df.iloc[:, -1]    # Target, assuming the last column is algal concentration
+y = df.iloc[:, -1]  # Target, assuming the last column is algal concentration
 
 # Split Data into Training and Testing Sets
 X_train, X_temp, y_train, y_temp = train_test_split(X, y, test_size=0.2, random_state=168)
@@ -211,12 +207,12 @@ print(f'R-squared score (Test): {r2_test}')
 print(f'Mean Squared Error (Test): {mse_test}')
 print(f'Root Mean Squared Error (Test): {rmse_test}')
 print(f'Mean Absolute Percentage Error (Test): {mape_test}')
-#-----------------------------------------------------------------------------------------------------
-#-----------------------------------------------------------------------------------------------------
-#XGB Adjustment of hyperparameters
-#XGB prediction
+# -----------------------------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------------------------------
+# XGB Adjustment of hyperparameters
+# XGB prediction
 # Feature importance
-#--------------------------------------------------------------------------
+# --------------------------------------------------------------------------
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -226,14 +222,13 @@ from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_percenta
 import time
 import os
 
-
 # Read Excel Data
 file_path = 'D:\\exp 1\\AVOCs.xlsx'
 df = pd.read_excel(file_path)
 #
 # Separate Features and Target
 X = df.iloc[:, 1:-1]  # Features
-y = df.iloc[:, -1]    # Target
+y = df.iloc[:, -1]  # Target
 
 # Split the dataset into training, validation, and test sets
 X_train, X_temp, y_train, y_temp = train_test_split(X, y, test_size=0.2, random_state=168)
@@ -288,8 +283,7 @@ grid_search.fit(X_train_val, y_train_val)
 
 # Calculate tuning duration
 tuning_duration = time.time() - start_time
-print(f"\nHyperparameter tuning completed in {tuning_duration/60:.2f} minutes")
-
+print(f"\nHyperparameter tuning completed in {tuning_duration / 60:.2f} minutes")
 
 results_df = pd.DataFrame(grid_search.cv_results_)
 
@@ -375,6 +369,7 @@ final_model.fit(X_train_val, y_train_val,
 y_train_pred = final_model.predict(X_train_val)
 y_test_pred = final_model.predict(X_test)
 
+
 # Evaluate the final model
 def evaluate_model(y_true, y_pred, set_name):
     r2 = r2_score(y_true, y_pred)
@@ -386,6 +381,7 @@ def evaluate_model(y_true, y_pred, set_name):
     print(f"RMSE: {rmse:.4f}")
     print(f"MAPE: {mape:.4f}")
     return r2, rmse, mape
+
 
 r2_train, rmse_train, mape_train = evaluate_model(y_train_val, y_train_pred, "Training")
 r2_test, rmse_test, mape_test = evaluate_model(y_test, y_test_pred, "Test")
@@ -459,22 +455,22 @@ plt.show()
 # ======================================================================
 # Summary Report
 # ======================================================================
-print("\n" + "="*50)
+print("\n" + "=" * 50)
 print("HYPERPARAMETER TUNING SUMMARY")
-print("="*50)
+print("=" * 50)
 print(f"Total parameter combinations evaluated: {len(final_results)}")
 print(f"Best parameters: {best_params}")
 print(f"Best CV R2 score: {grid_search.best_score_:.4f}")
-print(f"Tuning duration: {tuning_duration/60:.2f} minutes")
+print(f"Tuning duration: {tuning_duration / 60:.2f} minutes")
 print("\nFINAL MODEL PERFORMANCE:")
 print(f"Training R2: {r2_train:.4f}")
 print(f"Test R2:     {r2_test:.4f}")
 print(f"Test RMSE:   {rmse_test:.4f}")
 print(f"Test MAPE:   {mape_test:.4f}")
-print("="*50)
+print("=" * 50)
 
 # SHAP
-#--------------------------------------------------------------------------
+# --------------------------------------------------------------------------
 import pandas as pd
 import matplotlib.pyplot as plt
 import shap
@@ -484,13 +480,12 @@ from sklearn.metrics import r2_score, mean_squared_error
 from sklearn.preprocessing import MinMaxScaler
 import numpy as np
 
-
 # Read Excel Data
 df = pd.read_excel('D:\\exp 1\\AVOCs.xlsx')
 
 # Separate Features and Target
 X = df.iloc[:, 1:-1]  # Features, assuming they are from the second column to the second-to-last column
-y = df.iloc[:, -1]    # Target, assuming the last column is algal concentration
+y = df.iloc[:, -1]  # Target, assuming the last column is algal concentration
 
 # Initialize MinMaxScaler
 scaler = MinMaxScaler()
@@ -504,8 +499,8 @@ X_test, X_val, y_test, y_val = train_test_split(X_temp, y_temp, test_size=0.2, r
 
 # Build and Train XGBoost Regressor Model
 xgb_model = XGBRegressor(max_depth=3, learning_rate=0.1, n_estimators=300,
-        min_child_weight=1, gamma=0, subsample=1,
-        colsample_bytree=0.9, reg_lambda=0.2)
+                         min_child_weight=1, gamma=0, subsample=1,
+                         colsample_bytree=0.9, reg_lambda=0.2)
 
 # Define evaluation sets
 eval_set = [(X_train, y_train), (X_val, y_val)]
@@ -564,9 +559,107 @@ X_top_features = X_test.iloc[:, sorted_indices]  # Corresponding features from t
 plt.figure(figsize=(10, 8))
 shap.summary_plot(top_shap_values, X_top_features, feature_names=top_features, show=True)
 
-#Algal bloom risk assessment
-#------------------------------------------------------------------------------------
-#------------------------------------------------------------------------------------
+#--------------EconML---------------------------------------------------
+import pandas as pd
+from sklearn.preprocessing import StandardScaler
+from econml.solutions.causal_analysis import CausalAnalysis
+import matplotlib.pyplot as plt
+import numpy as np
+
+df = pd.read_excel('D:\\AVOCs.xlsx')
+
+X = df.iloc[:, 1:-1]  
+y = df.iloc[:, -1]   
+
+scaler = StandardScaler()
+X_normalized = scaler.fit_transform(X)
+
+causal_model = CausalAnalysis(
+    feature_inds=list(range(X.shape[1])),
+    categorical=[],
+    classification=False,
+    nuisance_models="automl",
+    heterogeneity_model="linear",
+    random_state=42,
+    n_jobs=-1
+)
+
+causal_model.fit(X_normalized, y)
+
+causal_effect = causal_model.global_causal_effect(alpha=0.05)
+print(causal_effect)
+
+ate_values = causal_effect["point"]
+ci_lower = causal_effect["ci_lower"]
+ci_upper = causal_effect["ci_upper"]
+p_values = causal_effect["p_value"]
+
+fig, ax = plt.subplots(figsize=(10, 8))
+sorted_idx = np.argsort(ate_values)
+
+ax.errorbar(
+    ate_values[sorted_idx],
+    range(len(X.columns)),
+    xerr=[ate_values[sorted_idx] - ci_lower[sorted_idx], ci_upper[sorted_idx] - ate_values[sorted_idx]],
+    fmt='o',
+    color='blue',
+    ecolor='blue',
+    elinewidth=2,
+    capsize=4,
+    label='ATE'
+)
+
+for i, p in enumerate(p_values[sorted_idx]):
+    if p < 0.001:
+        ax.text(ate_values[sorted_idx][i], i, '***', va='top')
+    elif p < 0.01:
+        ax.text(ate_values[sorted_idx][i], i, '**', va='top')
+    elif p < 0.05:
+        ax.text(ate_values[sorted_idx][i], i, '*', va='top')
+
+ax.set_yticks(range(len(X.columns)))
+ax.set_yticklabels(X.columns[sorted_idx])
+ax.set_xlabel('Average Treatment Effect (ATE)')
+# ax.set_ylabel('Feature')
+# ax.set_title('基于排序特征的因果分析')
+plt.gca().invert_yaxis()
+plt.legend()
+plt.show()
+
+# PDP
+# ------------------------------------------------------------------------------------
+import pandas as pd
+import matplotlib.pyplot as plt
+from xgboost import XGBRegressor
+from sklearn.model_selection import train_test_split
+from sklearn.inspection import PartialDependenceDisplay
+
+df = pd.read_excel('D:\\sample_all_result.xlsx')
+
+X = df.iloc[:, 1:-1]
+y = df.iloc[:, -1]
+
+X_train, X_temp, y_train, y_temp = train_test_split(X, y, test_size=0.2, random_state=168)
+X_test, X_val, y_test, y_val = train_test_split(X_temp, y_temp, test_size=0.2, random_state=168)
+
+xgb_model = XGBRegressor(max_depth=3, learning_rate=0.1, n_estimators=300,
+                         min_child_weight=1, gamma=0, subsample=1,
+                         colsample_bytree=0.9, reg_lambda=0.2)
+xgb_model.fit(X_train, y_train)
+
+features = [(32, 121)]
+
+fig, ax = plt.subplots(figsize=(10, 8))
+pdp_display = PartialDependenceDisplay.from_estimator(xgb_model, X_train, features, grid_resolution=50, ax=ax)
+
+plt.suptitle('2D Partial Dependence Plot for Features 46 and 151', fontsize=16, weight='bold')
+ax.set_xlabel('Feature 49', fontsize=14, weight='bold')
+ax.set_ylabel('Feature 139', fontsize=14, weight='bold')
+plt.show()
+
+# Algal bloom risk assessment
+# ------------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------------
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
@@ -577,74 +670,76 @@ import joblib
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+
 def train_and_save_model(df, model_path='xgb_model.joblib'):
-   
-    X = df.iloc[:, 1:-1] 
-    y = df.iloc[:, -1] 
+    X = df.iloc[:, 1:-1]
+    y = df.iloc[:, -1]
 
-     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=168)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=168)
 
-   
-    n_bootstrap_samples = 100
-    bootstrap_predictions = np.zeros((n_bootstrap_samples, len(X_test)))
-      for i in range(n_bootstrap_samples):
-             X_resampled, y_resampled = resample(X_train, y_train, random_state=i)
 
-        xgb_model = XGBRegressor(n_estimators=300, learning_rate=0.1, max_depth=3)
-        xgb_model.fit(X_resampled, y_resampled)
-        y_pred = xgb_model.predict(X_test)
-        bootstrap_predictions[i] = y_pred
-  
-    joblib.dump(xgb_model, model_path)
-    print(f"Model saved as {model_path}")
-   
-    y_pred_mean = bootstrap_predictions.mean(axis=0)
-    y_pred_std = bootstrap_predictions.std(axis=0)
-    r2 = r2_score(y_test, y_pred_mean)
-    mse = mean_squared_error(y_test, y_pred_mean)
+n_bootstrap_samples = 100
+bootstrap_predictions = np.zeros((n_bootstrap_samples, len(X_test)))
+for i in range(n_bootstrap_samples):
+    X_resampled, y_resampled = resample(X_train, y_train, random_state=i)
 
-    print(f'R-squared score (XGB): {r2}')
-    print(f'Mean Squared Error (XGB): {mse}')
+xgb_model = XGBRegressor(n_estimators=300, learning_rate=0.1, max_depth=3)
+xgb_model.fit(X_resampled, y_resampled)
+y_pred = xgb_model.predict(X_test)
+bootstrap_predictions[i] = y_pred
 
-    prob_algal_bloom = np.mean(bootstrap_predictions.flatten() > 0.1)
-    print(f'Probability of algal bloom (predicted value > 0.1): {prob_algal_bloom:.4f}')
+joblib.dump(xgb_model, model_path)
+print(f"Model saved as {model_path}")
 
-    return xgb_model, r2, mse, prob_algal_bloom
+y_pred_mean = bootstrap_predictions.mean(axis=0)
+y_pred_std = bootstrap_predictions.std(axis=0)
+r2 = r2_score(y_test, y_pred_mean)
+mse = mean_squared_error(y_test, y_pred_mean)
+
+print(f'R-squared score (XGB): {r2}')
+print(f'Mean Squared Error (XGB): {mse}')
+
+prob_algal_bloom = np.mean(bootstrap_predictions.flatten() > 0.1)
+print(f'Probability of algal bloom (predicted value > 0.1): {prob_algal_bloom:.4f}')
+
+return xgb_model, r2, mse, prob_algal_bloom
+
 
 def load_data(file_path):
     df = pd.read_excel(file_path)
-    X = df.iloc[:, 1:] 
+    X = df.iloc[:, 1:]
     return X
 
+
 def predict_and_plot_distribution(model_path, new_data):
-       loaded_model = joblib.load(model_path)
-  
-    n_bootstrap_samples = 100 #调整数量
-    bootstrap_predictions = np.zeros((n_bootstrap_samples, len(new_data)))
-   
-    for i in range(n_bootstrap_samples):
-        X_resampled = resample(new_data, random_state=i)
-        y_pred = loaded_model.predict(X_resampled)
-        bootstrap_predictions[i] = y_pred
-    
-    y_pred_mean = bootstrap_predictions.mean(axis=0)
-    y_pred_std = bootstrap_predictions.std(axis=0)
-
-    prob_algal_bloom = np.mean(bootstrap_predictions > 0.1, axis=0)
+    loaded_model = joblib.load(model_path)
 
 
-    for idx in range(len(new_data)):
-        plt.figure(figsize=(8, 6))
-        sns.histplot(bootstrap_predictions[:, idx], kde=True, bins=30, color='blue')
-        plt.axvline(y_pred_mean[idx], color='red', linestyle='--', label=f'Mean Prediction: {y_pred_mean[idx]:.4f}')
-        plt.xlabel('Predicted Algal Concentration', fontsize=20)
-        plt.ylabel('Density', fontsize=20)
-        plt.title(f'Time Point {idx + 1} Prediction Distribution', fontsize=24)
-        plt.legend(fontsize=15)
-        plt.tick_params(axis='both', which='major', labelsize=18)
-        plt.show()
+n_bootstrap_samples = 100  # 调整数量
+bootstrap_predictions = np.zeros((n_bootstrap_samples, len(new_data)))
 
-    return y_pred_mean, prob_algal_bloom
+for i in range(n_bootstrap_samples):
+    X_resampled = resample(new_data, random_state=i)
+    y_pred = loaded_model.predict(X_resampled)
+    bootstrap_predictions[i] = y_pred
+
+y_pred_mean = bootstrap_predictions.mean(axis=0)
+y_pred_std = bootstrap_predictions.std(axis=0)
+
+prob_algal_bloom = np.mean(bootstrap_predictions > 0.1, axis=0)
+
+for idx in range(len(new_data)):
+    plt.figure(figsize=(8, 6))
+    sns.histplot(bootstrap_predictions[:, idx], kde=True, bins=30, color='blue')
+    plt.axvline(y_pred_mean[idx], color='red', linestyle='--', label=f'Mean Prediction: {y_pred_mean[idx]:.4f}')
+    plt.xlabel('Predicted Algal Concentration', fontsize=20)
+    plt.ylabel('Density', fontsize=20)
+    plt.title(f'Time Point {idx + 1} Prediction Distribution', fontsize=24)
+    plt.legend(fontsize=15)
+    plt.tick_params(axis='both', which='major', labelsize=18)
+    plt.show()
+
+return y_pred_mean, prob_algal_bloom
 
 df = pd.read_excel('D:exp 1\\AVOCs.xlsx')
 trained_model, r2, mse, prob_algal_bloom_train = train_and_save_model(df)
@@ -652,4 +747,5 @@ new_data = load_data("D:\\sample_all_result.xlsx")
 y_pred_mean, prob_algal_bloom = predict_and_plot_distribution('xgb_model.joblib', new_data)
 for i, (mean, risk) in enumerate(zip(y_pred_mean, prob_algal_bloom)):
     print(f'Time Point {i + 1}: Mean Prediction = {mean:.4f}, Algal Bloom Risk = {risk:.4f}')
+
 
