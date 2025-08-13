@@ -1,4 +1,2 @@
-# install.packages("devtools")
-devtools::install_github("Hy4m/linkET", force = TRUE)
-packageVersion("linkET")
-
+Machine Learning-Based Prediction of
+This Project is based on Python 3.12 and R4.1.1.
