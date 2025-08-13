@@ -8,7 +8,7 @@ from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.metrics import r2_score, mean_squared_error
 from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_percentage_error
 # Read Excel Data
-df = pd.read_excel('D:\\博士\\微生物\\数据\\藻华预警\\单藻体系\\exp 1\\27天PTR数据_藻种分类.xlsx')
+df = pd.read_excel('D:\\exp 1\\AVOCs.xlsx')
 
 # Separate Features and Target
 X = df.iloc[:, 1:-1]  # Features, assuming they are from the second column to the second-to-last column
@@ -70,7 +70,7 @@ plt.rcParams['axes.labelweight'] = 'bold'
 
 
 # Read Excel Data
-df = pd.read_excel('D:\\博士\\微生物\\数据\\藻华预警\\单藻体系\\exp 1\\27天PTR数据_藻种分类.xlsx')
+df = pd.read_excel('D:\\exp 1\\AVOCs.xlsx')
 
 # Separate Features and Target
 X = df.iloc[:, 1:-1]  # Features, assuming they are from the second column to the second-to-last column
@@ -124,7 +124,7 @@ plt.rcParams['axes.labelweight'] = 'bold'
 
 
 # Read Excel Data
-df = pd.read_excel('D:\\博士\\微生物\\数据\\藻华预警\\单藻体系\\exp 1\\27天PTR数据_藻种分类.xlsx')
+df = pd.read_excel('D:\\exp 1\\AVOCs.xlsx')
 
 # Separate Features and Target
 X = df.iloc[:, 1:-1]  # Features, assuming they are from the second column to the second-to-last column
@@ -171,7 +171,7 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_percentage_error
 
 # Read Excel Data
-df = pd.read_excel('D:\\博士\\微生物\\数据\\藻华预警\\单藻体系\\exp 1\\27天PTR数据_藻种分类.xlsx')
+df = pd.read_excel('D:\\exp 1\\AVOCs.xlsx')
 
 # Separate Features and Target
 X = df.iloc[:, 1:-1]  # Features, assuming they are from the second column to the second-to-last column
@@ -184,7 +184,7 @@ X_test, X_val, y_test, y_val = train_test_split(X_temp, y_temp, test_size=0.2, r
 print("Training set size:", len(X_train))
 print("Test set size:", len(X_test))
 print("Validation set size:", len(X_val))
-#创建模型
+
 model = RandomForestRegressor()
 
 model.fit(X_train, y_train)
@@ -211,7 +211,8 @@ print(f'R-squared score (Test): {r2_test}')
 print(f'Mean Squared Error (Test): {mse_test}')
 print(f'Root Mean Squared Error (Test): {rmse_test}')
 print(f'Mean Absolute Percentage Error (Test): {mape_test}')
-
+#-----------------------------------------------------------------------------------------------------
+#-----------------------------------------------------------------------------------------------------
 #XGB Adjustment of hyperparameters
 #XGB prediction
 # Feature importance
@@ -227,7 +228,7 @@ import os
 
 
 # Read Excel Data
-file_path = 'D:\\data transform\\博士\\微生物\\数据\\藻华预警\\单藻体系\\exp 1\\27天PTR数据_藻种分类.xlsx'
+file_path = 'D:\\exp 1\\AVOCs.xlsx'
 df = pd.read_excel(file_path)
 #
 # Separate Features and Target
@@ -289,10 +290,7 @@ grid_search.fit(X_train_val, y_train_val)
 tuning_duration = time.time() - start_time
 print(f"\nHyperparameter tuning completed in {tuning_duration/60:.2f} minutes")
 
-# ======================================================================
-# Save Tuning Results to Excel
-# ======================================================================
-# Create results DataFrame
+
 results_df = pd.DataFrame(grid_search.cv_results_)
 
 # Select and rename important columns
@@ -340,7 +338,7 @@ final_results = final_results[[
 final_results = final_results.sort_values(by='Rank')
 
 # Create output directory if it doesn't exist
-output_dir = 'D:\\data transform\\博士\\微生物\\数据\\藻华预警\\单藻体系\\exp 1\\蓝藻调优结果1'
+output_dir = 'D:\\exp 1\\result'
 os.makedirs(output_dir, exist_ok=True)
 
 # Save to Excel
@@ -488,7 +486,7 @@ import numpy as np
 
 
 # Read Excel Data
-df = pd.read_excel('D:\\data transform\\博士\\微生物\\数据\\藻华预警\\单藻体系\\exp 1\\27天PTR数据_藻种分类.xlsx')
+df = pd.read_excel('D:\\exp 1\\AVOCs.xlsx')
 
 # Separate Features and Target
 X = df.iloc[:, 1:-1]  # Features, assuming they are from the second column to the second-to-last column
@@ -579,87 +577,62 @@ import joblib
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# 训练并保存模型
 def train_and_save_model(df, model_path='xgb_model.joblib'):
-    # 分离特征和目标变量
-    X = df.iloc[:, 1:-1]  # 特征列，假设从第二列到倒数第二列
-    y = df.iloc[:, -1]  # 目标变量，假设最后一列是藻类浓度
+   
+    X = df.iloc[:, 1:-1] 
+    y = df.iloc[:, -1] 
 
-    # 划分训练集和测试集
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=168)
+     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=168)
 
-    # 生成bootstrap样本数量
+   
     n_bootstrap_samples = 100
     bootstrap_predictions = np.zeros((n_bootstrap_samples, len(X_test)))
+      for i in range(n_bootstrap_samples):
+             X_resampled, y_resampled = resample(X_train, y_train, random_state=i)
 
-    # 生成bootstrap样本并训练多个模型
-    for i in range(n_bootstrap_samples):
-        # 生成bootstrap样本
-        X_resampled, y_resampled = resample(X_train, y_train, random_state=i)
-
-        # 构建并训练XGBoost回归模型
         xgb_model = XGBRegressor(n_estimators=300, learning_rate=0.1, max_depth=3)
         xgb_model.fit(X_resampled, y_resampled)
-
-        # 预测
         y_pred = xgb_model.predict(X_test)
         bootstrap_predictions[i] = y_pred
-
-    # 保存训练好的模型
+  
     joblib.dump(xgb_model, model_path)
     print(f"Model saved as {model_path}")
-
-    # 计算预测均值和标准差
+   
     y_pred_mean = bootstrap_predictions.mean(axis=0)
     y_pred_std = bootstrap_predictions.std(axis=0)
-
-    # 评估模型
     r2 = r2_score(y_test, y_pred_mean)
     mse = mean_squared_error(y_test, y_pred_mean)
 
     print(f'R-squared score (XGB): {r2}')
     print(f'Mean Squared Error (XGB): {mse}')
 
-    # 计算预测值大于0.1的概率
     prob_algal_bloom = np.mean(bootstrap_predictions.flatten() > 0.1)
     print(f'Probability of algal bloom (predicted value > 0.1): {prob_algal_bloom:.4f}')
 
     return xgb_model, r2, mse, prob_algal_bloom
 
-# 加载数据
 def load_data(file_path):
-    # 读取Excel数据
     df = pd.read_excel(file_path)
-    # 假设数据结构与训练时相似
-    # 返回特征X
-    X = df.iloc[:, 1:]  # 假设特征从第二列开始
+    X = df.iloc[:, 1:] 
     return X
 
 def predict_and_plot_distribution(model_path, new_data):
-    # 加载已保存的模型
-    loaded_model = joblib.load(model_path)
-
-    # 生成bootstrap样本数量
+       loaded_model = joblib.load(model_path)
+  
     n_bootstrap_samples = 100 #调整数量
     bootstrap_predictions = np.zeros((n_bootstrap_samples, len(new_data)))
-
-    # 生成bootstrap样本并预测
+   
     for i in range(n_bootstrap_samples):
-        # 生成bootstrap样本
         X_resampled = resample(new_data, random_state=i)
-
-        # 预测
         y_pred = loaded_model.predict(X_resampled)
         bootstrap_predictions[i] = y_pred
-
-    # 计算预测均值和标准差
+    
     y_pred_mean = bootstrap_predictions.mean(axis=0)
     y_pred_std = bootstrap_predictions.std(axis=0)
 
-    # 计算预测值大于0.1的概率
     prob_algal_bloom = np.mean(bootstrap_predictions > 0.1, axis=0)
 
-    # 绘制预测分布图
+
     for idx in range(len(new_data)):
         plt.figure(figsize=(8, 6))
         sns.histplot(bootstrap_predictions[:, idx], kde=True, bins=30, color='blue')
@@ -673,16 +646,10 @@ def predict_and_plot_distribution(model_path, new_data):
 
     return y_pred_mean, prob_algal_bloom
 
-# 训练并保存模型
-df = pd.read_excel('D:\\data transform\\博士\\微生物\\数据\\藻华预警\\单藻体系\\exp 1\\27天PTR数据_藻种分类.xlsx')
+df = pd.read_excel('D:exp 1\\AVOCs.xlsx')
 trained_model, r2, mse, prob_algal_bloom_train = train_and_save_model(df)
-
-# 加载新数据
-new_data = load_data("D:\\data transform\\博士\\微生物\\数据\\藻华预警\\单藻体系\\荷塘月色采样\\采样荷塘sample_all_result.xlsx")
-
-# 使用保存的模型对新数据进行预测并绘制分布图
+new_data = load_data("D:\\sample_all_result.xlsx")
 y_pred_mean, prob_algal_bloom = predict_and_plot_distribution('xgb_model.joblib', new_data)
-
-# 输出预测均值和藻华风险
 for i, (mean, risk) in enumerate(zip(y_pred_mean, prob_algal_bloom)):
     print(f'Time Point {i + 1}: Mean Prediction = {mean:.4f}, Algal Bloom Risk = {risk:.4f}')
+
